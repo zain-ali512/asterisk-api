@@ -26,7 +26,6 @@ exports.getOneExtn = async (req, res) => {
 
 exports.createExtn = async (req, res) => {
   const { EXT_ID, TYPE, HOST, SECRET, CONTEXT } = req.body;
-  console.log(req.body);
   try {
     const newExtension = await Extension.create({
       EXT_ID,
