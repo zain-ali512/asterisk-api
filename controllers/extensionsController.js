@@ -1,6 +1,6 @@
 const { Extension } = require("../models/extensionsModel");
 const fs = require("fs");
-const filePath = "/etc/asterisk/extensions_sip.conf";
+const filePath = "/etc/asterisk/sip.conf";
 
 exports.getAllExtn = async (req, res) => {
   try {
@@ -26,6 +26,7 @@ exports.getOneExtn = async (req, res) => {
 
 exports.createExtn = async (req, res) => {
   const { EXT_ID, TYPE, HOST, SECRET, CONTEXT } = req.body;
+  console.log(req.body);
   try {
     const newExtension = await Extension.create({
       EXT_ID,
