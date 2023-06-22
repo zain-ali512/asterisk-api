@@ -1,6 +1,6 @@
 const { Extension } = require("../models/extensionsModel");
 const fs = require("fs");
-const filePath = "/etc/asterisk/sip.conf";
+const filePath = "/etc/asterisk/extensions_sip.conf";
 
 exports.getAllExtn = async (req, res) => {
   try {
