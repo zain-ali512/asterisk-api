@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const bodyparser = require("body-parser");
 const sequelize = require("./config/dbConfig");
 const cors = require("cors");
-require("./models/extensionsModel");
+require("./models/sipModel");
 
 dotenv.config();
 const PORT = process.env.PORT || 8001;
@@ -11,7 +11,7 @@ const app = express();
 app.use(bodyparser.json());
 
 sequelize.sync({
-  /* alter: true */
+  /*force: true*/
 });
 
 const allowedOrigins = [
@@ -32,7 +32,7 @@ app.use(
   })
 );
 
-app.use("/", require("./routes/extensionsRoutes"));
+app.use("/", require("./routes/sipRoutes"));
 
 app.listen(PORT, () => {
   console.log(`Server started on port : ${PORT}`);

@@ -6,7 +6,7 @@ const {
   getOneExtn,
   updateExtn,
   deleteExtn,
-} = require("../controllers/extensionsController");
+} = require("../controllers/sipController");
 
 router.route("/ext").get(getAllExtn);
 router.route("/ext/new").post(createExtn);
