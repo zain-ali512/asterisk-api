@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/dbConfig.js");
 
-exports.Sip = sequelize.define(
+const Sip = sequelize.define(
   "Sip",
   {
     SIP_ID: {
@@ -67,3 +67,5 @@ exports.Sip = sequelize.define(
     timestamps: false,
   }
 );
+
+module.exports = Sip;

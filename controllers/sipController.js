@@ -2,29 +2,29 @@ const { Sip } = require("../models/sipModel");
 const fs = require("fs");
 const filePath = "/etc/asterisk/sip_gui.conf";
 
-exports.getAllExtn = async (req, res) => {
+exports.getAllSip = async (req, res) => {
   try {
-    const extensions = await Sip.findAll();
-    res.json(extensions);
+    const sips = await Sip.findAll();
+    res.json(sips);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
 };
 
-exports.getOneExtn = async (req, res) => {
+exports.getOneSip = async (req, res) => {
   const { ext_id } = req.params;
   try {
-    const extension = await Sip.findByPk(ext_id);
-    if (!extension) {
-      return res.status(404).json({ error: "Extension not found" });
+    const sip = await Sip.findByPk(ext_id);
+    if (!sip) {
+      return res.status(404).json({ error: "Sip not found" });
     }
-    res.json(extension);
+    res.json(sip);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
 };
 
-exports.createExtn = async (req, res) => {
+exports.createSip = async (req, res) => {
   const {
     SIP_ID,
     DISALLOW,
@@ -42,7 +42,7 @@ exports.createExtn = async (req, res) => {
     CONTEXT,
   } = req.body;
   try {
-    const newExtension = await Sip.create({
+    const newSip = await Sip.create({
       SIP_ID,
       DISALLOW,
       HOST,
@@ -58,7 +58,7 @@ exports.createExtn = async (req, res) => {
       DIRECTRTPSETUP,
       CONTEXT,
     });
-    const newData = `[${newExtension.SIP_ID}]\ndisallow=${newExtension.DISALLOW}\nhost=${newExtension.HOST}\nallow=${newExtension.ALLOW}\ntype=${newExtension.TYPE}\nsecret=${newExtension.SECRET}\ndtmfmode=${newExtension.DTMFMODE}\nqualify=${newExtension.QUALIFY}\ncanreinvite=${newExtension.CANREINVITE}\ninsecure=${newExtension.INSECURE}\nnat=${newExtension.NAT}\ndirectmedia=${newExtension.DIRECTMEDIA}\ndirectrtpsetup=${newExtension.DIRECTRTPSETUP}\ncontext=${newExtension.CONTEXT}\n\n`;
+    const newData = `[${newSip.SIP_ID}]\ndisallow=${newSip.DISALLOW}\nhost=${newSip.HOST}\nallow=${newSip.ALLOW}\ntype=${newSip.TYPE}\nsecret=${newSip.SECRET}\ndtmfmode=${newSip.DTMFMODE}\nqualify=${newSip.QUALIFY}\ncanreinvite=${newSip.CANREINVITE}\ninsecure=${newSip.INSECURE}\nnat=${newSip.NAT}\ndirectmedia=${newSip.DIRECTMEDIA}\ndirectrtpsetup=${newSip.DIRECTRTPSETUP}\ncontext=${newSip.CONTEXT}\n\n`;
     fs.appendFile(filePath, newData, (err) => {
       if (err) {
         console.error("Error appending data to file:", err);
@@ -67,13 +67,13 @@ exports.createExtn = async (req, res) => {
       console.log("Data appended to file successfully.");
     });
 
-    res.status(201).json(newExtension);
+    res.status(201).json(newSip);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
 };
 
-exports.updateExtn = async (req, res) => {
+exports.updateSip = async (req, res) => {
   const { ext_id } = req.params;
   const {
     DISALLOW,
@@ -91,11 +91,11 @@ exports.updateExtn = async (req, res) => {
     CONTEXT,
   } = req.body;
   try {
-    const extension = await Sip.findByPk(ext_id);
-    if (!extension) {
-      return res.status(404).json({ error: "Extension not found" });
+    const sip = await Sip.findByPk(ext_id);
+    if (!sip) {
+      return res.status(404).json({ error: "Sip not found" });
     }
-    await extension.update({
+    await sip.update({
       DISALLOW,
       HOST,
       ALLOW,
@@ -117,10 +117,10 @@ exports.updateExtn = async (req, res) => {
       }
       const lines = data.split("\n");
       const index = lines.findIndex((line) =>
-        line.startsWith(`[${extension.SIP_ID}]`)
+        line.startsWith(`[${sip.SIP_ID}]`)
       );
       if (index === -1) {
-        console.error("Extension data not found in file.");
+        console.error("Sip data not found in file.");
         return res.status(500).json({ error: "Internal server error" });
       }
       lines[index + 1] = `disallow=${DISALLOW}`;
@@ -145,18 +145,18 @@ exports.updateExtn = async (req, res) => {
         console.log("Data updated in file successfully.");
       });
     });
-    res.json(extension);
+    res.json(sip);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
 };
 
-exports.deleteExtn = async (req, res) => {
+exports.deleteSip = async (req, res) => {
   const { ext_id } = req.params;
   try {
-    const extension = await Sip.findByPk(ext_id);
-    if (!extension) {
-      return res.status(404).json({ error: "Extension not found" });
+    const sip = await Sip.findByPk(ext_id);
+    if (!sip) {
+      return res.status(404).json({ error: "Sip not found" });
     }
     fs.readFile(filePath, "utf8", (err, data) => {
       if (err) {
@@ -164,7 +164,7 @@ exports.deleteExtn = async (req, res) => {
         return res.status(500).json({ error: "Internal server error" });
       }
       const newData = data.replace(
-        `[${extension.SIP_ID}]\ndisallow=${extension.DISALLOW}\nhost=${extension.HOST}\nallow=${extension.ALLOW}\ntype=${extension.TYPE}\nsecret=${extension.SECRET}\ndtmfmode=${extension.DTMFMODE}\nqualify=${extension.QUALIFY}\ncanreinvite=${extension.CANREINVITE}\ninsecure=${extension.INSECURE}\nnat=${extension.NAT}\ndirectmedia=${extension.DIRECTMEDIA}\ndirectrtpsetup=${extension.DIRECTRTPSETUP}\ncontext=${extension.CONTEXT}\n\n`,
+        `[${sip.SIP_ID}]\ndisallow=${sip.DISALLOW}\nhost=${sip.HOST}\nallow=${sip.ALLOW}\ntype=${sip.TYPE}\nsecret=${sip.SECRET}\ndtmfmode=${sip.DTMFMODE}\nqualify=${sip.QUALIFY}\ncanreinvite=${sip.CANREINVITE}\ninsecure=${sip.INSECURE}\nnat=${sip.NAT}\ndirectmedia=${sip.DIRECTMEDIA}\ndirectrtpsetup=${sip.DIRECTRTPSETUP}\ncontext=${sip.CONTEXT}\n\n`,
         ""
       );
       fs.writeFile(filePath, newData, (err) => {
@@ -175,8 +175,8 @@ exports.deleteExtn = async (req, res) => {
         console.log("Data removed from file successfully.");
       });
     });
-    await extension.destroy();
-    res.json({ message: "Extension deleted successfully" });
+    await sip.destroy();
+    res.json({ message: "Sip deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }

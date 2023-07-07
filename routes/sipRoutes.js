@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getAllExtn,
-  createExtn,
-  getOneExtn,
-  updateExtn,
-  deleteExtn,
+  getAllSip,
+  createSip,
+  getOneSip,
+  updateSip,
+  deleteSip,
 } = require("../controllers/sipController");
 
-router.route("/ext").get(getAllExtn);
-router.route("/ext/new").post(createExtn);
-router.route("/ext/:ext_id").get(getOneExtn).put(updateExtn).delete(deleteExtn);
+router.route("/ext").get(getAllSip);
+router.route("/ext/new").post(createSip);
+router.route("/ext/:ext_id").get(getOneSip).put(updateSip).delete(deleteSip);
 
 module.exports = router;
