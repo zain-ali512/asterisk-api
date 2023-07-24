@@ -12,10 +12,10 @@ const PORT = process.env.PORT || 8001;
 const app = express();
 app.use(bodyparser.json());
 
-// Syc sql tables
+// Sync sql tables
 sequelize
   .sync({
-    force: true,
+    alter: true,
   })
   .then(() => {
     console.log("Database and tables created!");

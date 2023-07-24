@@ -4,21 +4,13 @@ const sequelize = require("../config/dbConfig.js");
 const Menu = sequelize.define(
   "Menu",
   {
-    option_id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
     option_number: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    prompt_english: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-    prompt_urdu: {
-      type: DataTypes.STRING(255),
+    language_name: {
+      type: DataTypes.STRING(50),
+      primaryKey: true,
       allowNull: false,
     },
   },
@@ -28,47 +20,20 @@ const Menu = sequelize.define(
   }
 );
 
-const Language = sequelize.define(
-  "Language",
-  {
-    language_id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    language_name: {
-      type: DataTypes.STRING(50),
-      allowNull: false,
-    },
-  },
-  {
-    tableName: "language",
-    timestamps: false,
-  }
-);
-
 const Submenu = sequelize.define(
   "Submenu",
   {
     submenu_id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    parent_option_id: {
-      type: DataTypes.INTEGER,
       allowNull: false,
     },
     submenu_number: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       allowNull: false,
     },
-    prompt_english: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-    prompt_urdu: {
-      type: DataTypes.STRING(255),
+    language_name: {
+      type: DataTypes.STRING(50),
       allowNull: false,
     },
   },
@@ -84,22 +49,18 @@ const AudioFile = sequelize.define(
     audio_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true,
-    },
-    option_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    language_id: {
-      type: DataTypes.INTEGER,
       allowNull: false,
     },
     file_path: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    audio_data: {
-      type: DataTypes.BLOB("long"),
+    submenu_number: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    language_name: {
+      type: DataTypes.STRING(50),
       allowNull: false,
     },
   },
@@ -109,4 +70,4 @@ const AudioFile = sequelize.define(
   }
 );
 
-module.exports = { Menu, Language, Submenu, AudioFile };
+module.exports = { Menu, Submenu, AudioFile };
