@@ -1,7 +1,7 @@
 const fs = require("fs");
 const filePath = "/etc/asterisk/sip_gui.conf";
 
-// Parse the SIP data from the file
+// Helper function to parse the SIP data from the file
 function parseSipDataFromFile(data) {
   const lines = data.split("\n\n");
   return lines
@@ -11,15 +11,19 @@ function parseSipDataFromFile(data) {
       const sipIdLine = properties[0];
       const sipIdStartIndex = sipIdLine.indexOf("[") + 1;
       const sipIdEndIndex = sipIdLine.indexOf("]");
-      sip["SIP_ID"] = sipIdLine.substring(sipIdStartIndex, sipIdEndIndex);
-      if (!sip["SIP_ID"]) {
+      const sipId = sipIdLine.substring(sipIdStartIndex, sipIdEndIndex);
+
+      // Skip the empty block
+      if (!sipId) {
         return null;
       }
+
       properties.slice(1).forEach((property) => {
         const [key, value] = property.split("=");
         sip[key.toLowerCase()] = value;
       });
-      return sip;
+
+      return sip; // Do not add "SIP_ID" again to the object
     })
     .filter(Boolean); // Remove any null entries (empty blocks)
 }
