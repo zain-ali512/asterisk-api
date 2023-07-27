@@ -1,7 +1,6 @@
 const fs = require("fs");
 const filePath = "/etc/asterisk/sip_gui.conf";
 
-// Helper function to parse the SIP data from the file
 function parseSipDataFromFile(data) {
   const lines = data.split("\n\n");
   return lines
@@ -12,23 +11,18 @@ function parseSipDataFromFile(data) {
       const sipIdStartIndex = sipIdLine.indexOf("[") + 1;
       const sipIdEndIndex = sipIdLine.indexOf("]");
       const sipId = sipIdLine.substring(sipIdStartIndex, sipIdEndIndex);
-
-      // Skip the empty block
       if (!sipId) {
         return null;
       }
-
       properties.slice(1).forEach((property) => {
         const [key, value] = property.split("=");
         sip[key.toLowerCase()] = value;
       });
-
-      return sip; // Do not add "SIP_ID" again to the object
+      return sip;
     })
-    .filter(Boolean); // Remove any null entries (empty blocks)
+    .filter(Boolean);
 }
 
-// Convert the SIP data to string format for writing to the file
 function stringifySipDataForFile(sips) {
   return sips
     .map((sip) => {
@@ -47,7 +41,6 @@ exports.getAllSip = async (req, res) => {
         console.error("Error reading data from file:", err);
         return res.status(500).json({ error: "Internal server error" });
       }
-      // Parse the data from the file and respond with it
       const sips = parseSipDataFromFile(data);
       res.json(sips);
     });
@@ -77,7 +70,6 @@ exports.getOneSip = async (req, res) => {
 };
 
 exports.createSip = async (req, res) => {
-  // Assuming the request body has the necessary properties for creating a new SIP entry
   const newSipData = req.body;
   try {
     fs.readFile(filePath, "utf8", (err, data) => {
@@ -85,12 +77,9 @@ exports.createSip = async (req, res) => {
         console.error("Error reading data from file:", err);
         return res.status(500).json({ error: "Internal server error" });
       }
-      // Parse the existing data and add the new entry to it
       const sips = parseSipDataFromFile(data);
       sips.push(newSipData);
       const newData = stringifySipDataForFile(sips);
-
-      // Write the updated data back to the file
       fs.writeFile(filePath, newData, (err) => {
         if (err) {
           console.error("Error writing data to file:", err);
@@ -119,12 +108,8 @@ exports.updateSip = async (req, res) => {
       if (sipIndex === -1) {
         return res.status(404).json({ error: "Sip not found" });
       }
-
-      // Update the SIP entry in the array
       sips[sipIndex] = { SIP_ID: ext_id, ...updatedSipData };
       const newData = stringifySipDataForFile(sips);
-
-      // Write the updated data back to the file
       fs.writeFile(filePath, newData, (err) => {
         if (err) {
           console.error("Error writing data to file:", err);
@@ -152,12 +137,8 @@ exports.deleteSip = async (req, res) => {
       if (sipIndex === -1) {
         return res.status(404).json({ error: "Sip not found" });
       }
-
-      // Remove the SIP entry from the array
       sips.splice(sipIndex, 1);
       const newData = stringifySipDataForFile(sips);
-
-      // Write the updated data back to the file
       fs.writeFile(filePath, newData, (err) => {
         if (err) {
           console.error("Error writing data to file:", err);
