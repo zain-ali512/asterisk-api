@@ -1,7 +1,7 @@
 const fs = require("fs");
 const filePath = "/etc/asterisk/sip_gui.conf";
 
-function parseSipDataFromFile(data) {
+const parseSipDataFromFile = (data) => {
   const lines = data.split("\n\n");
   return lines
     .map((block) => {
@@ -21,9 +21,9 @@ function parseSipDataFromFile(data) {
       return sip;
     })
     .filter(Boolean);
-}
+};
 
-function stringifySipDataForFile(sips) {
+const stringifySipDataForFile = (sips) => {
   return sips
     .map((sip) => {
       const properties = Object.entries(sip)
@@ -32,7 +32,7 @@ function stringifySipDataForFile(sips) {
       return `[${sip.SIP_ID}]\n${properties}\n`;
     })
     .join("\n");
-}
+};
 
 exports.getAllSip = async (req, res) => {
   try {

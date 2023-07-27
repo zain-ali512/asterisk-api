@@ -1,9 +1,9 @@
 // Imports
 const express = require("express");
 const bodyparser = require("body-parser");
-const sequelize = require("./config/dbConfig");
 const cors = require("cors");
 require("dotenv").config();
+//const sequelize = require("./config/dbConfig");
 // require("./models");
 
 // Config
@@ -43,7 +43,8 @@ app.use(
 );
 
 // Routes
-app.use("/", require("./routes/sipRoutes"));
+app.use("/sip", require("./routes/sipRoutes"));
+app.use("/extn", require("./routes/extnRoutes"));
 
 // Server
 app.listen(PORT, () => {
