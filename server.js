@@ -1,18 +1,17 @@
 // Imports
 const express = require("express");
-const dotenv = require("dotenv");
 const bodyparser = require("body-parser");
 const sequelize = require("./config/dbConfig");
 const cors = require("cors");
-require("./models");
+require("dotenv").config();
+// require("./models");
 
 // Config
-dotenv.config();
 const PORT = process.env.PORT || 8001;
 const app = express();
 app.use(bodyparser.json());
 
-// Sync sql tables
+/*Sync sql tables
 sequelize
   .sync({
     alter: true,
@@ -22,7 +21,7 @@ sequelize
   })
   .catch((error) => {
     console.error("Error syncing database:", error);
-  });
+  });*/
 
 // Cors options
 const allowedOrigins = [

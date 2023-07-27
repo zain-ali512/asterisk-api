@@ -6,7 +6,7 @@ const {
   getOneSip,
   updateSip,
   deleteSip,
-} = require("../controllers/sipController");
+} = require("../controllers/sipControllerNoDb");
 
 router.route("/ext").get(getAllSip);
 router.route("/ext/new").post(createSip);
