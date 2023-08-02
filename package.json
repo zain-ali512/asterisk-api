@@ -1,7 +1,7 @@
 {
-  "name": "extensions",
+  "name": "asterisk",
   "version": "1.0.0",
-  "description": "API that adds extension to sip.conf for asterisk server.",
+  "description": "API that configures dialplan and IVR in Asterisk.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -10,7 +10,6 @@
   "author": "Zain Ali",
   "license": "ISC",
   "dependencies": {
-    "asterisk-ami": "^0.1.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",

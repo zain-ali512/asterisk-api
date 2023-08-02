@@ -1,6 +1,5 @@
 // Imports
-const express = require("express");
-const bodyparser = require("body-parser");
+const app = require("express")();
 const cors = require("cors");
 require("dotenv").config();
 //const sequelize = require("./config/dbConfig");
@@ -8,8 +7,7 @@ require("dotenv").config();
 
 // Config
 const PORT = process.env.PORT || 8001;
-const app = express();
-app.use(bodyparser.json());
+app.use(require("body-parser").json());
 
 /*Sync sql tables
 sequelize
@@ -46,7 +44,7 @@ app.use(
 app.use("/sip", require("./routes/sipRoutes"));
 app.use("/extn", require("./routes/extnRoutes"));
 
-// Server
+// Server start
 app.listen(PORT, () => {
   console.log(`Server started on port : ${PORT}`);
 });
