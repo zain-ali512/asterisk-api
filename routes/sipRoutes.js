@@ -8,8 +8,11 @@ const {
   deleteSip,
 } = require("../controllers/sipControllerNoDb");
 
-router.route("/").get(getAllSip);
-router.route("/new").post(createSip);
-router.route("/sip_id").get(getOneSip).put(updateSip).delete(deleteSip);
+router
+  .get("/", getAllSip)
+  .post("/new", createSip)
+  .get("/:sip_id", getOneSip)
+  .put("/:sip_id", updateSip)
+  .delete("/:sip_id", deleteSip);
 
 module.exports = router;

@@ -1,15 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getAllExtn,
-  createExtn,
-  getOneExtn,
-  updateExtn,
-  deleteExtn,
+  getAllExtensions,
+  addExtension,
+  getOneExtension,
+  updateExtension,
+  deleteExtension,
+  deleteContext,
 } = require("../controllers/extnControllerNoDb");
 
-router.route("/").get(getAllExtn);
-router.route("/new").post(createExtn);
-router.route("/ext_id").get(getOneExtn).put(updateExtn).delete(deleteExtn);
+router
+  .get("/", getAllExtensions)
+  .post("/new", addExtension)
+  .get("/:context/:extension", getOneExtension)
+  .put("/:context/:extension", updateExtension)
+  .delete("/:context/:extension", deleteExtension)
+  .delete("/:context", deleteContext);
 
 module.exports = router;
