@@ -4,7 +4,6 @@ const cors = require("cors");
 require("dotenv").config();
 
 // Config
-const PORT = process.env.PORT || 8001;
 app.use(require("express").json());
 
 // Cors options
@@ -29,8 +28,9 @@ app.use(
 // Routes
 app.use("/sip", require("./routes/sipRoutes"));
 app.use("/extn", require("./routes/extnRoutes"));
+app.use("/ivr", require("./routes/ivrRoutes"));
 
 // Server start
-app.listen(PORT, () => {
-  console.log(`Server started on port : ${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log("Server started");
 });
