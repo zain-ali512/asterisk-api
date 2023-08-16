@@ -1,7 +1,9 @@
 // Imports
 const app = require("express")();
 const cors = require("cors");
+const sequelize = require("./config/dbConfig");
 require("dotenv").config();
+require("./models");
 
 // Config
 app.use(require("express").json());
@@ -25,10 +27,20 @@ app.use(
   })
 );
 
+// Create or sync database tables
+sequelize.sync()
+  .then(() => {
+    console.log('Tables created / updated');
+  })
+  .catch((err) => {
+    console.error('Cannot create / update tables.', err);
+  });
+
+
 // Routes
 app.use("/sip", require("./routes/sipRoutes"));
 app.use("/extn", require("./routes/extnRoutes"));
-app.use("/ivr", require("./routes/ivrRoutes"));
+app.use("/astr", require("./routes/astr"));
 
 // Server start
 app.listen(process.env.PORT, () => {

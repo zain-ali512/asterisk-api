@@ -1,11 +1,11 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/dbConfig.js");
 
-exports.Extn = sequelize.define(
-  "Extn",
+exports.Flow = sequelize.define(
+  "Flow",
   {
-    context: {
-      type: DataTypes.STRING,
+    numbers: {
+      type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
     },
@@ -15,7 +15,7 @@ exports.Extn = sequelize.define(
     },
   },
   {
-    tableName: "extensions",
+    tableName: "callFlows",
     timestamps: false,
   }
 );

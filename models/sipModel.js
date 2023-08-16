@@ -1,71 +1,69 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/dbConfig.js");
 
-const Sip = sequelize.define(
+exports.Sip = sequelize.define(
   "Sip",
   {
-    SIP_ID: {
-      type: DataTypes.INTEGER,
+    sip_id: {
+      type: DataTypes.STRING,
       primaryKey: true,
       allowNull: false,
     },
-    DISALLOW: {
+    disallow: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    HOST: {
+    host: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    ALLOW: {
+    allow: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    TYPE: {
+    type: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    SECRET: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    DTMFMODE: {
+    secret: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    QUALIFY: {
+    dtmfmode: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    CANREINVITE: {
+    qualify: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    INSECURE: {
+    canreinvite: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    NAT: {
+    insecure: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    DIRECTMEDIA: {
+    nat: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    DIRECTRTPSETUP: {
+    directmedia: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    CONTEXT: {
+    directrtpsetup: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    context: {
       type: DataTypes.STRING,
       allowNull: false,
     },
   },
   {
-    tableName: "sip_conf",
+    tableName: "sips",
     timestamps: false,
   }
 );
-
-module.exports = Sip;
