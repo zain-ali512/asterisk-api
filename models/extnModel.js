@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/dbConfig.js");
 
-exports.Extn = sequelize.define(
-  "Extn",
+exports.Extensions = sequelize.define(
+  "Extensions",
   {
     context: {
       type: DataTypes.STRING,

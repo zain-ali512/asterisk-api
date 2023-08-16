@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/dbConfig.js");
 
-exports.Sip = sequelize.define(
-  "Sip",
+exports.Sips = sequelize.define(
+  "Sips",
   {
     sip_id: {
       type: DataTypes.STRING,

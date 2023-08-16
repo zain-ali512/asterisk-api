@@ -1,15 +1,19 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/dbConfig.js");
 
-exports.Flow = sequelize.define(
-  "Flow",
+exports.CallFlows = sequelize.define(
+  "CallFlows",
   {
     numbers: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
     },
-    extension: {
+    function: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    parameter: {
       type: DataTypes.STRING,
       allowNull: false,
     },

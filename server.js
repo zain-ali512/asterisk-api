@@ -28,7 +28,7 @@ app.use(
 );
 
 // Create or sync database tables
-sequelize.sync()
+sequelize.sync(/* { force: true } */)
   .then(() => {
     console.log('Tables created / updated');
   })

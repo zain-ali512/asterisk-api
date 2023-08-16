@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/dbConfig.js");
 
-exports.Menu = sequelize.define(
+exports.MainMenu = sequelize.define(
   "MainMenu",
   {
     option_number: {
@@ -20,7 +20,7 @@ exports.Menu = sequelize.define(
   }
 );
 
-exports.Submenu = sequelize.define(
+exports.SubMenu = sequelize.define(
   "SubMenu",
   {
     submenu_id: {
@@ -43,8 +43,8 @@ exports.Submenu = sequelize.define(
   }
 );
 
-exports.AudioFile = sequelize.define(
-  "AudioFile",
+exports.AudioFiles = sequelize.define(
+  "AudioFiles",
   {
     audio_id: {
       type: DataTypes.INTEGER,
@@ -65,7 +65,7 @@ exports.AudioFile = sequelize.define(
     },
   },
   {
-    tableName: "audioFile",
+    tableName: "audioFiles",
     timestamps: false,
   }
 );

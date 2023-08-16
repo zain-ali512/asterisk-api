@@ -1,7 +1,8 @@
-const { Menu, Submenu, AudioFile } = require("./ivrAudiosModel");
-const { Sip } = require("./sipModel");
-const { Extn } = require("./extnModel");
-const { Flow } = require("./callFlows");
+const { MainMenu, SubMenu, AudioFiles } = require("./ivrAudiosModel");
+const { Sips } = require("./sipModel");
+const { Extensions } = require("./extnModel");
+const { CallFlows } = require("./callFlowsModel");
+const { Agents } = require("./agentsModel");
 module.exports = {
-    Menu, Submenu, AudioFile, Sip, Extn, Flow
+    MainMenu, SubMenu, AudioFiles, Sips, Extensions, CallFlows, Agents
 };
