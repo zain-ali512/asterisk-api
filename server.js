@@ -28,14 +28,14 @@ app.use(
 );
 
 // Create or sync database tables
-sequelize.sync(/* { force: true } */)
+sequelize
+  .sync(/* { force: true } */)
   .then(() => {
-    console.log('Tables created / updated');
+    console.log("Tables created / updated");
   })
   .catch((err) => {
-    console.error('Cannot create / update tables.', err);
+    console.error("Cannot create / update tables.", err);
   });
-
 
 // Routes
 app.use("/sip", require("./routes/sipRoutes"));

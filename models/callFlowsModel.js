@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/dbConfig.js");
 
-exports.CallFlows = sequelize.define(
+const CallFlows = sequelize.define(
   "CallFlows",
   {
     numbers: {
@@ -23,3 +23,4 @@ exports.CallFlows = sequelize.define(
     timestamps: false,
   }
 );
+module.exports = CallFlows;
