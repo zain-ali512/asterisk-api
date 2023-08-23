@@ -7,7 +7,7 @@ const sequelize = new Sequelize(
   process.env.PASSWORD,
   {
     host: "localhost",
-    dialect: "mysql",
+    dialect: "mariadb",
     logging: false,
   }
 );

@@ -40,9 +40,9 @@ sequelize
 // Routes
 app.use("/sip", require("./routes/sipRoutes"));
 app.use("/extn", require("./routes/extnRoutes"));
-app.use("/astr", require("./routes/astr"));
+//app.use("/astr", require("./routes/astr"));
 
 // Server start
 app.listen(process.env.PORT, () => {
-  console.log("Server started");
+  console.log(`Server started on port: ${process.env.PORT}`);
 });

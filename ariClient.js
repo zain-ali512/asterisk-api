@@ -1,65 +1,66 @@
 const Client = require("ari-client");
 const CallFlows = require("./models/callFlowsModel");
 const log = console.log;
+const ivrHandler = require("./ivrPlayers/ivrHandler");
+const queueHandler = require("./callQueues/queueHandler");
 
 const connection = async () => {
   try {
-    // Connect to asterisk
     const ari = await Client.connect(
       "http://localhost:9088",
       "asterisk",
       "asterisk"
     );
-
-    // Event listeners
-    ari.on("StasisStart", StasisStart);
-
-    // Start ARI
+    ari.on("StasisStart", handleStasisStart);
     ari.start("ivr-by-zain");
     log("Connection Successful");
-  } catch (e) {
-    log("Connection error:", e);
+  } catch (error) {
+    log("Connection error:", error);
   }
 };
 
-// Statis start function
-const StasisStart = async (event, channel) => {
+const handleStasisStart = async (event, channel) => {
   try {
     log("Call received. Channel ID:", channel.id);
 
-    // Extract number
     const destinationNumber = channel.dialplan.exten;
     log("Destination Number:", destinationNumber);
 
-    // Function Check
-    let item = await dbCheck(destinationNumber);
+    const item = await dbCheck(destinationNumber);
 
     if (item) {
-      const { func, param } = item;
-      //const functionName = item.function;
-      //const parameterValue = item.parameter;
-      log("Function:", func);
-      log("Parameter:", param);
+      const functionName = item.function;
+      const parameterValue = item.parameter;
+      log("Function:", functionName);
+      log("Parameter:", parameterValue);
+
+      if (functionName === "IVR") {
+        ivrHandler(channel, parameterValue);
+      } else if (functionName === "DIAL") {
+        queueHandler(channel, parameterValue);
+      } else {
+        log("No function provided against the dialed number.");
+      }
     } else {
       log("Number not found in database.");
     }
-  } catch (e) {
-    log("Error handling stasis event:", e);
+  } catch (error) {
+    log("Error handling stasis event:", error);
   }
 };
 
-// Get function from database
 const dbCheck = async (destinationNumber) => {
   try {
-    const items = await CallFlows.findOne({
+    const item = await CallFlows.findOne({
       where: {
         numbers: destinationNumber,
       },
     });
-    return items;
+    return item;
   } catch (error) {
     console.error("Error retrieving items:", error);
     throw error;
   }
 };
+
 connection();

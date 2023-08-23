@@ -1,40 +1,10 @@
-const Client = require("ari-client");
-const log = console.log;
-
 // Global variables
 let userInput = false;
 let userInputWaiting = true;
 
-const connection = async () => {
+// Play IVR
+const sampleIvr1 = async (channel) => {
   try {
-    // Connect to asterisk
-    const ari = await Client.connect(
-      "http://localhost:9088",
-      "asterisk",
-      "asterisk"
-    );
-
-    // Event listeners
-    ari.on("StasisStart", StasisStart);
-    ari.on("StasisEnd", HangUpCall);
-
-    // Start ARI
-    ari.start("ivr-by-zain");
-    log("Connection Successful");
-  } catch (e) {
-    log("Connection error:", e);
-  }
-};
-
-// Statis start function
-const StasisStart = async (event, channel) => {
-  try {
-    log("Call received. Channel ID:", channel.id);
-
-    // Extract number
-    const destinationNumber = channel.dialplan.exten;
-    log("Destination Number:", destinationNumber);
-
     // Answer call
     try {
       await channel.answer();
@@ -177,4 +147,4 @@ const playSound = async (channel) => {
   } catch (e) {}
 };
 
-connection();
+module.exports = sampleIvr1;
